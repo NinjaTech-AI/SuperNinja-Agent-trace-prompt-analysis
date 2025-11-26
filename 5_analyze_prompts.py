@@ -22,7 +22,6 @@ def parse_args():
 
 
 # Tokenizer
-
 def build_tokenizer():
     return tiktoken.encoding_for_model("gpt-4o-mini")
 
@@ -34,7 +33,6 @@ def count_tokens(text, enc):
 
 
 # Tool-call parsing
-
 TOOL_RESULT_PATTERN = re.compile(
     r"<tool_result>(.*?)</tool_result>",
     re.DOTALL,
@@ -102,7 +100,7 @@ def overall_stats(df):
     for role in ["user", "assistant"]:
         sub = df.loc[df["role"] == role, num_cols]
 
-        print(f"---- [{role.upper()}] describe ----")
+        print(f"---- [{role.upper()} Prompt] description ----")
         print(sub.describe().round(2))
 
         print("\n---- Percentiles ----")
@@ -127,7 +125,7 @@ def tool_type_stats(df):
     tool_df = df[df["tool_type"].notna()].copy()
 
     print("======================================================")
-    print("Statistics by tool type")
+    print("Statistics about tool-call type")
     print("====================================================")
 
     TOP_N = 10
@@ -136,7 +134,7 @@ def tool_type_stats(df):
     tool_type_pct = tool_type_counts / tool_type_counts.sum() * 100
     tool_type_pct_top = tool_type_pct.head(TOP_N).round(2)
 
-    print(f"\n---- Tool type proportion (Top {TOP_N}) -----")
+    print(f"\n---- Tool-call type proportion (Top {TOP_N}) -----")
     print(tool_type_pct_top.to_frame("percent (%)"))
 
     avg_token_by_type = (
@@ -145,8 +143,8 @@ def tool_type_stats(df):
         .sort_values(ascending=False)
     )
 
-    print("\n----- Average tokens per tool type -----")
-    print(avg_token_by_type.to_frame("avg_tool_tokens"))
+    print("\n----- Average tokens generated from each time of various tool-call -----")
+    print(avg_token_by_type.to_frame("avg_num_tokens_generated"))
 
     # Plot: tool type percentage
     plt.figure(figsize=(16, 6))
@@ -161,7 +159,7 @@ def tool_type_stats(df):
     # Plot: average tokens per tool type
     plt.figure(figsize=(16, 6))
     sns.barplot(x=avg_token_by_type.index, y=avg_token_by_type.values)
-    plt.title("Average tokens per tool type", fontsize=14)
+    plt.title("Average tokens generated from each time of various tool-call", fontsize=14)
     plt.ylabel("Average tokens")
     plt.xlabel("Tool type")
     plt.xticks(rotation=45, ha="right")
@@ -171,7 +169,7 @@ def tool_type_stats(df):
 
 def analyze_by_file_path(df):
     print("\n=====================================================")
-    print("Analysis grouped by file_path")
+    print("Analysis below is grouped by id/chat")
     print("====================================================\n")
 
     group = df.groupby("file_path")
@@ -190,7 +188,7 @@ def analyze_by_file_path(df):
     # Distribution of tool-call percentage across dialogs
     plt.figure(figsize=(16, 6))
     sns.histplot(file_tool_pct_df["tool_call_token_pct"], bins=30, kde=True)
-    plt.title("Distribution of tool-call percentage per dialog", fontsize=14)
+    plt.title("DThe distribution of the percentage of tokens from tool-calls out of the total token count", fontsize=14)
     plt.xlabel("Tool-call percentage (%)")
     plt.tight_layout()
     plt.show()
@@ -213,9 +211,9 @@ def analyze_by_file_path(df):
     )
 
     print("=====================================================")
-    print("Tool-call token percentage by file_path (bucketed)")
+    print("The percentage occupied by the tokens from tool-call of each complete chat(bucketed)") 
     print("====================================================")
-    print(range_counts.to_frame("num_of_dialogs"))
+    print(range_counts.to_frame("num_of_chats"))
 
     # Dominant tool type per file_path
     tool_type_by_file = (
@@ -237,17 +235,17 @@ def analyze_by_file_path(df):
 
     plt.figure(figsize=(16, 6))
     sns.barplot(x=freq_dominant.index, y=freq_dominant.values)
-    plt.title("Frequency of dominant tool types per dialog", fontsize=14)
-    plt.ylabel("Number of dialogs")
-    plt.xlabel("Tool type")
+    plt.title("Frequency of dominant tool-call types", fontsize=14)
+    plt.ylabel("Number of chats")
+    plt.xlabel("Tool-call type")
     plt.xticks(rotation=45, ha="right")
     plt.tight_layout()
     plt.show()
 
     print("\n====================================================")
-    print("Dominant tool type per file_path (counts)")
+    print("Dominant tool-call type per chat (counts)")
     print("=====================================================")
-    print(freq_dominant.to_frame("num_of_dialogs"))
+    print(freq_dominant.to_frame("num_of_chats"))
 
 
 def main():
