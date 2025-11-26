@@ -188,7 +188,7 @@ def analyze_by_file_path(df):
     # Distribution of tool-call percentage across dialogs
     plt.figure(figsize=(16, 6))
     sns.histplot(file_tool_pct_df["tool_call_token_pct"], bins=30, kde=True)
-    plt.title("DThe distribution of the percentage of tokens from tool-calls out of the total token count", fontsize=14)
+    plt.title("The distribution of the percentage of tokens from tool-calls out of the total token count", fontsize=14)
     plt.xlabel("Tool-call percentage (%)")
     plt.tight_layout()
     plt.show()
