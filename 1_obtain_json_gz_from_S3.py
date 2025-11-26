@@ -16,11 +16,11 @@ csv.field_size_limit(sys.maxsize)
 def parse_args():
     parser = argparse.ArgumentParser(description="Download latest .gz trace files from S3 based on ID list in CSV")
 
-    parser.add_argument("--csv-path", type=str, default="/Users/yu.yan/Documents/coding_project/full_data.csv",
+    parser.add_argument("--csv-path", type=str, required=True, default=None,
                         help="Path to CSV file containing IDs")
     parser.add_argument("--id-column", type=str, default="id",
                         help="Column name in CSV that contains IDs")
-    parser.add_argument("--download-root", type=str, default="/Users/yu.yan/Documents/coding_project/data",
+    parser.add_argument("--download-root", type=str, required=True, default=None,
                         help="Local root directory to store downloaded files")
     parser.add_argument("--bucket-name", type=str, default="ninja-task-trace-beta",
                         help="S3 bucket name")
