@@ -56,7 +56,7 @@ def analyze_tool_calls(prompt, enc):
     for m in matches:
         inner = m.strip()
 
-        # Skip <str-replace>
+        # Skip <str-replace> 
         if inner.startswith("<str-replace>"):
             continue
 
@@ -146,7 +146,7 @@ def tool_type_stats(df):
     print("\n----- Average tokens generated from each time of various tool-call -----")
     print(avg_token_by_type.to_frame("avg_num_tokens_generated"))
 
-    # Plot: tool type percentage
+    # tool type percentage
     plt.figure(figsize=(16, 6))
     sns.barplot(x=tool_type_pct.index, y=tool_type_pct.values)
     plt.title("Tool type percentage (%)", fontsize=14)
@@ -156,7 +156,7 @@ def tool_type_stats(df):
     plt.tight_layout()
     plt.show()
 
-    # Plot: average tokens per tool type
+    # average tokens per tool type
     plt.figure(figsize=(16, 6))
     sns.barplot(x=avg_token_by_type.index, y=avg_token_by_type.values)
     plt.title("Average tokens generated from each time of various tool-call", fontsize=14)
@@ -185,13 +185,13 @@ def analyze_by_file_path(df):
         "tool_call_token_pct", ascending=False
     )
 
-    # Distribution of tool-call percentage across dialogs
-    plt.figure(figsize=(16, 6))
-    sns.histplot(file_tool_pct_df["tool_call_token_pct"], bins=30, kde=True)
-    plt.title("The distribution of the percentage of tokens from tool-calls out of the total token count", fontsize=14)
-    plt.xlabel("Tool-call percentage (%)")
-    plt.tight_layout()
-    plt.show()
+    # The distribution of the percentage of tokens from tool-calls out of the total token count
+    #plt.figure(figsize=(16, 6))
+    #sns.histplot(file_tool_pct_df["tool_call_token_pct"], bins=30, kde=True)
+    #plt.title("The distribution of the percentage of tokens from tool-calls out of the total token count", fontsize=14)
+    #plt.xlabel("Tool-call percentage (%)")
+    #plt.tight_layout()
+    #plt.show()
 
     # Bucketed percentage ranges
     bins = [0, 20, 40, 60, 80, 100]
