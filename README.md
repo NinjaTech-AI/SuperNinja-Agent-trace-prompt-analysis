@@ -1,7 +1,7 @@
 # Agent Trace & Prompt Analysis
 
 This repo contains a small pipeline to download SuperNinja Agent chat logs from S3 Bucket, decompress them,
-summarise their agent configuration, and analyse prompt/token usage. The purpose of this is to give some insight about optimisation direction towards prompt and context. 
+summarise their agent configuration, and analyse prompt/token usage. The purpose of this is to give some insights about optimisation direction towards prompt and context. 
 
 The scripts are intentionally simple and focused on CLI usage.
 
