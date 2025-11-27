@@ -48,7 +48,7 @@ def main():
 
     for col in [ID_COL, AGENT_TYPE_COL, MODE_COL]:
         if col not in df.columns:
-            raise KeyError(f"Column '{col}' not found in CSV. Available columns: {list(df.columns)}")
+            raise KeyError(f"Column '{col}' not found in CSV. available columns: {list(df.columns)}")
 
     df_sub = df[df[ID_COL].isin(ids_on_disk)].copy()
     print(f"Matched {len(df_sub)} rows between local data and CSV IDs.")
